@@ -57,11 +57,11 @@ app.secret_key = "super-secret-key"
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 # PostgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'postgresql://postgres:password@localhost/sqlmanager'
+    'postgresql://postgres:password_postgres@localhost/sqlmanager'
 )
 # MySQL
 # app.config['SQLALCHEMY_DATABASE_URI'] = (
-#     'mysql+pymysql://root:password@localhost/sqlmanager'
+#     'mysql+pymysql://root:password_postgres@localhost/sqlmanager'
 # )
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -99,10 +99,9 @@ with app.app_context():
     db.create_all()
     admin = User.query.filter_by(username="admin").first()
     if not admin:
-        hashed_password = generate_password_hash("admin123")
         admin = User(
             username="admin",
-            password=hashed_password
+            password="password_postgres"
         )
         db.session.add(admin)
         db.session.commit()
@@ -329,5 +328,5 @@ if __name__ == "__main__":
     app.run(
         debug=True,
         host="0.0.0.0",
-        port=5000
+        port=5432
     )
