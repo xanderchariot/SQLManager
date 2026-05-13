@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdab2cc6-95fa-4c47-b3af-0326b95c480a" name="Changes" comment="added main">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="fdab2cc6-95fa-4c47-b3af-0326b95c480a" name="Changes" comment="added main" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,10 +72,35 @@
       <option name="project" value="LOCAL" />
       <updated>1778672219933</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="renamed &quot;main&quot; to &quot;app&quot;">
+      <option name="closed" value="true" />
+      <created>1778672517097</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1778672517097</updated>
+    </task>
+    <task id="LOCAL-00003" summary="renamed &quot;main&quot; to &quot;app&quot;">
+      <option name="closed" value="true" />
+      <created>1778672566499</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1778672566499</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added main">
+      <option name="closed" value="true" />
+      <created>1778672698153</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778672698153</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="renamed &quot;main&quot; to &quot;app&quot;" />
     <MESSAGE value="added main" />
     <option name="LAST_COMMIT_MESSAGE" value="added main" />
   </component>
