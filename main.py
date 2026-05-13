@@ -1,4 +1,4 @@
-# app.py
+# main.py
 #
 # Advanced SQL Database Manager
 # Features:
@@ -18,7 +18,7 @@
 #
 # RUN:
 #
-# python app.py
+# python main.py
 #
 # DEFAULT LOGIN:
 # username: admin
