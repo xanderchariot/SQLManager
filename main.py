@@ -97,14 +97,19 @@ def load_user(user_id):
 # =========================================================
 with app.app_context():
     db.create_all()
-    admin = User.query.filter_by(username="admin").first()
-    if not admin:
+    existing_user = User.query.filter_by(
+        username="admin"
+    ).first()
+    if not existing_user:
         admin = User(
             username="admin",
-            password="password_postgres"
+            password=generate_password_hash("admin123")
         )
         db.session.add(admin)
         db.session.commit()
+        print("Admin user created!")
+    else:
+        print("Admin already exists!")
 # =========================================================
 # HTML TEMPLATES
 # =========================================================
@@ -325,8 +330,9 @@ def logout():
 # START SERVER
 # =========================================================
 if __name__ == "__main__":
-    app.run(
-        debug=True,
-        host="0.0.0.0",
-        port=5432
-    )
+    if __name__ == "__main__":
+        app.run(
+            debug=True,
+            host="127.0.0.1",
+            port=9000
+        )
