@@ -11,6 +11,7 @@
 # INSTALL:
 # pip install flask flask_sqlalchemy flask_login
 # pip install psycopg2-binary pymysql
+# pip install pandas openpyxl
 #
 # RUN:
 # python main.py
