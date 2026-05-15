@@ -236,6 +236,7 @@ DASHBOARD_TEMPLATE = """
             Open Table Browser
         </button>
     </a>
+    <br>
     <a href="/logout" class="logout">
         Logout
     </a>
@@ -432,8 +433,11 @@ TABLE_BROWSER_TEMPLATE = """
                 Logged in as:
                 <strong>{{ user.username }}</strong>
                 <a href="/dashboard">
-                    Dashboard
+                    <button type="button">
+                            Dashboard
+                    </button>
                 </a>
+                <br>
                 <a href="/logout"
                    class="logout">
                    Logout
