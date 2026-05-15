@@ -43,6 +43,9 @@ from sqlalchemy import text
 from sqlalchemy import inspect
 from flask import jsonify
 import os
+import pandas as pd
+from io import BytesIO
+from flask import send_file
 # =========================================================
 # CONFIG
 # =========================================================
@@ -384,6 +387,46 @@ TABLE_BROWSER_TEMPLATE = """
         <div class="topbar">
             <div>
                 <h1>{{ selected_table }}</h1>
+                <div style="margin-bottom:20px;">
+                    <a href="/table/{{ selected_table }}/export/csv">
+                        <button type="button">
+                            Export CSV
+                        </button>
+                    </a>
+                    <a href="/table/{{ selected_table }}/export/excel">
+                        <button type="button">
+                            Export Excel
+                        </button>
+                    </a>
+                    <form
+                        action="/table/{{ selected_table }}/import/csv"
+                        method="POST"
+                        enctype="multipart/form-data"
+                        style="display:inline;"
+                    >
+                        <input type="file"
+                        name="file"
+                        accept=".csv"
+                        required>
+                        <button type="submit">
+                            Import CSV
+                        </button>
+                    </form>
+                    <form
+                        action="/table/{{ selected_table }}/import/excel"
+                        method="POST"
+                        enctype="multipart/form-data"
+                        style="display:inline;"
+                    >
+                        <input type="file"
+                        name="file"
+                        accept=".xlsx"
+                        required>
+                        <button type="submit">
+                            Import Excel
+                        </button>
+                    </form>
+                </div>
             </div>
             <div>
                 Logged in as:
@@ -650,6 +693,105 @@ def delete_row(table_name, row_id):
     db.session.execute(query, {"pk": row_id})
     db.session.commit()
     flash("Row deleted")
+    return redirect(f"/table/{table_name}")
+# =========================================================
+# EXPORT CSV
+# =========================================================
+@app.route("/table/<table_name>/export/csv")
+@login_required
+def export_csv(table_name):
+    df = pd.read_sql(
+        f"SELECT * FROM {table_name}",
+        db.engine
+    )
+    output = BytesIO()
+    df.to_csv(output, index=False)
+    output.seek(0)
+    return send_file(
+        output,
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name=f"{table_name}.csv"
+    )
+# =========================================================
+# EXPORT EXCEL
+# =========================================================
+@app.route("/table/<table_name>/export/excel")
+@login_required
+def export_excel(table_name):
+    df = pd.read_sql(
+        f"SELECT * FROM {table_name}",
+        db.engine
+    )
+    output = BytesIO()
+    with pd.ExcelWriter(
+        output,
+        engine="openpyxl"
+    ) as writer:
+        df.to_excel(
+            writer,
+            index=False,
+            sheet_name=table_name
+        )
+    output.seek(0)
+    return send_file(
+        output,
+        mimetype=(
+            "application/vnd.openxmlformats-officedocument."
+            "spreadsheetml.sheet"
+        ),
+        as_attachment=True,
+        download_name=f"{table_name}.xlsx"
+    )
+# =========================================================
+# IMPORT CSV
+# =========================================================
+@app.route(
+    "/table/<table_name>/import/csv",
+    methods=["POST"]
+)
+@login_required
+def import_csv(table_name):
+    file = request.files["file"]
+    if not file:
+        flash("No file selected")
+        return redirect(f"/table/{table_name}")
+    try:
+        df = pd.read_csv(file)
+        df.to_sql(
+            table_name,
+            con=db.engine,
+            if_exists="append",
+            index=False
+        )
+        flash("CSV imported successfully")
+    except Exception as e:
+        flash(str(e))
+    return redirect(f"/table/{table_name}")
+# =========================================================
+# IMPORT EXCEL
+# =========================================================
+@app.route(
+    "/table/<table_name>/import/excel",
+    methods=["POST"]
+)
+@login_required
+def import_excel(table_name):
+    file = request.files["file"]
+    if not file:
+        flash("No file selected")
+        return redirect(f"/table/{table_name}")
+    try:
+        df = pd.read_excel(file)
+        df.to_sql(
+            table_name,
+            con=db.engine,
+            if_exists="append",
+            index=False
+        )
+        flash("Excel imported successfully")
+    except Exception as e:
+        flash(str(e))
     return redirect(f"/table/{table_name}")
 # =========================================================
 # LOGOUT
