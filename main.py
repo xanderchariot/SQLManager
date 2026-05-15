@@ -1,13 +1,3 @@
-# Features:
-# - User Authentication/Login
-# - PostgreSQL Support
-# - MySQL Support
-# - SQLite Support
-# - SQLAlchemy ORM
-# - Admin Dashboard
-# - CRUD Operations
-# - Execute Custom SQL
-#
 # INSTALL:
 # pip install flask flask_sqlalchemy flask_login
 # pip install psycopg2-binary pymysql
