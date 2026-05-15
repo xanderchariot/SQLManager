@@ -32,8 +32,6 @@ from werkzeug.security import (
 )
 from sqlalchemy import text
 from sqlalchemy import inspect
-from flask import jsonify
-import os
 import pandas as pd
 from io import BytesIO
 from flask import send_file
